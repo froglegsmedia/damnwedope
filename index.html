@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<!-- saved from url=(0254)file:///C:/Users/tyler/AppData/Local/Packages/Claude_pzs8sxrjxfjjc/LocalCache/Roaming/Claude/local-agent-mode-sessions/e5cbe29a-491b-4e44-b258-fcfb3e027cc1/93b2bbc7-4462-4d7f-8348-b1670c0175a2/local_4df27150-5f97-4260-8c8c-b7885867c9ab/outputs/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Damn We Dope</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Background image */
+    .bg {
+      position: fixed;
+      inset: 0;
+      background-image: url('background.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.4);
+      z-index: 0;
+    }
+
+    /* Red/dark gradient overlay */
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(80,10,0,0.55) 0%, rgba(0,0,0,0.85) 100%);
+      z-index: 1;
+    }
+
+    /* Scanline effect */
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,0,0,0.12) 3px,
+        rgba(0,0,0,0.12) 4px
+      );
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2rem;
+      max-width: 680px;
+      width: 100%;
+    }
+
+    /* Logo */
+    .logo {
+      width: min(320px, 80vw);
+      margin: 0 auto 2.5rem;
+      display: block;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 0 30px rgba(200,50,20,0.6));
+    }
+
+    /* Warning label */
+    .warning-label {
+      display: inline-block;
+      border: 1px solid rgba(255,60,30,0.7);
+      color: rgba(255,100,70,1);
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 0.3em 0.9em;
+      margin-bottom: 1rem;
+      animation: flicker 3s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 95%, 100% { opacity: 1; }
+      96% { opacity: 0.4; }
+      97% { opacity: 1; }
+      98% { opacity: 0.3; }
+      99% { opacity: 1; }
+    }
+
+    .headline {
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 20px rgba(255,80,40,0.5);
+    }
+
+    .subheadline {
+      font-size: clamp(0.75rem, 2vw, 0.9rem);
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Access code */
+    .access-form {
+      display: flex;
+      gap: 0;
+      max-width: 380px;
+      margin: 0 auto 2.5rem;
+      border: 1px solid rgba(255,60,30,0.5);
+      box-shadow: 0 0 20px rgba(255,40,10,0.15), inset 0 0 20px rgba(0,0,0,0.4);
+    }
+
+    .access-input {
+      flex: 1;
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: #fff;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.75rem 1rem;
+      outline: none;
+    }
+
+    .access-input::placeholder {
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.15em;
+    }
+
+    .access-btn {
+      background: rgba(180,30,10,0.7);
+      border: none;
+      color: #fff;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.75rem 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .access-btn:hover {
+      background: rgba(220,50,20,0.9);
+    }
+
+    /* Invasion date */
+    .invasion-date {
+      font-size: clamp(0.65rem, 1.8vw, 0.8rem);
+      letter-spacing: 0.3em;
+      color: rgba(255,120,80,0.9);
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+    }
+
+    .invasion-date span {
+      color: #fff;
+    }
+
+    /* Socials */
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 1.8rem;
+    }
+
+    .socials a {
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .socials a:hover { color: rgba(255,120,80,1); }
+
+    .socials svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg"></div>
+  <div class="bg-overlay"></div>
+  <div class="scanlines"></div>
+
+  <div class="content">
+
+    <!-- Logo -->
+    <img class="logo" src="file:///C:/Users/tyler/AppData/Local/Packages/Claude_pzs8sxrjxfjjc/LocalCache/Roaming/Claude/local-agent-mode-sessions/e5cbe29a-491b-4e44-b258-fcfb3e027cc1/93b2bbc7-4462-4d7f-8348-b1670c0175a2/local_4df27150-5f97-4260-8c8c-b7885867c9ab/outputs/logo.png" alt="Damn We Dope">
+
+    <div class="warning-label">⚠ Warning</div>
+
+    <p class="headline">Damn We Dope is arriving.</p>
+
+    <div class="access-form">
+      <input class="access-input" type="text" placeholder="Enter access code" maxlength="20">
+      <button class="access-btn">Enter</button>
+    </div>
+
+    <p class="invasion-date">The invasion will begin on <span>June 27th, 2026</span></p>
+
+    <div class="socials">
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/damnwedope" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path>
+        </svg>
+        Instagram
+      </a>
+      <!-- TikTok -->
+      <a href="https://www.tiktok.com/@damnwedope" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"></path>
+        </svg>
+        TikTok
+      </a>
+      <!-- YouTube -->
+      <a href="https://www.youtube.com/@damnwedope" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path>
+        </svg>
+        YouTube
+      </a>
+    </div>
+
+  </div>
+
+
+
+</body></html>
