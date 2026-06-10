@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Damn We Dope — Access Granted</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 1.5rem 4rem;
+    }
+
+    /* Logo */
+    .logo {
+      width: min(200px, 60vw);
+      margin-bottom: 2.5rem;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 0 20px rgba(200,50,20,0.5));
+    }
+
+    /* Album cover */
+    .album-cover {
+      width: min(320px, 85vw);
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 0.75rem;
+      box-shadow: 0 0 40px rgba(0,0,0,0.8);
+    }
+
+    .album-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Track list */
+    .tracklist {
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .track {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 0.6rem 0;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-radius: 3px;
+      padding-left: 0.5rem;
+    }
+
+    .track:hover {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .track.active {
+      background: rgba(180,30,10,0.15);
+    }
+
+    .track-num {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.25);
+      width: 1.5rem;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .track.active .track-num {
+      color: rgba(255,100,70,0.9);
+    }
+
+    .track-name {
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.8);
+      flex: 1;
+    }
+
+    .track.active .track-name {
+      color: #fff;
+    }
+
+    .track-play {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.2);
+      flex-shrink: 0;
+      width: 1.2rem;
+      text-align: center;
+    }
+
+    .track.active .track-play {
+      color: rgba(255,100,70,0.9);
+    }
+
+    /* Player bar */
+    .player {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10,10,10,0.97);
+      border-top: 1px solid rgba(255,60,30,0.25);
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+
+    .player-top {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .player-title {
+      flex: 1;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .player-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+
+    .ctrl-btn {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.6);
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.2rem;
+      transition: color 0.15s;
+      line-height: 1;
+    }
+
+    .ctrl-btn:hover { color: #fff; }
+
+    .ctrl-btn.play-pause {
+      background: rgba(180,30,10,0.8);
+      color: #fff;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
+
+    .ctrl-btn.play-pause:hover {
+      background: rgba(220,50,20,1);
+    }
+
+    /* Progress bar */
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .time {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.3);
+      width: 2.8rem;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: rgba(200,50,20,0.9);
+      border-radius: 2px;
+      width: 0%;
+      pointer-events: none;
+    }
+
+    audio { display: none; }
+
+    /* Mars photo */
+    .mars-photo {
+      width: 100%;
+      max-width: 700px;
+      display: block;
+      margin: 4rem auto 0;
+      border-radius: 4px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.8);
+    }
+
+    /* Socials */
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 1.8rem;
+      margin: 2.5rem 0 6rem;
+    }
+
+    .socials a {
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .socials a:hover { color: rgba(255,120,80,1); }
+
+    .socials svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+  </style>
+</head>
+<body>
+
+  <img class="logo" src="https://pub-b03960712b8347fabf5dbdeccedba6f7.r2.dev/logo.png" alt="Damn We Dope" />
+
+  <img class="album-cover" src="https://pub-b03960712b8347fabf5dbdeccedba6f7.r2.dev/album-cover.jpg" alt="Damn We Dope Album" />
+  <p class="album-title">Damn We Dope</p>
+
+  <div class="tracklist" id="tracklist"></div>
+
+  <!-- Mars photo + socials -->
+  <img class="mars-photo" src="https://pub-b03960712b8347fabf5dbdeccedba6f7.r2.dev/mars-pic.jpg" alt="Damn We Dope" />
+
+  <div class="socials">
+    <a href="https://www.instagram.com/damnwedope" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      Instagram
+    </a>
+    <a href="https://www.tiktok.com/@damnwedope" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>
+      TikTok
+    </a>
+    <a href="https://www.youtube.com/@damnwedope" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      YouTube
+    </a>
+  </div>
+
+  <!-- Player -->
+  <div class="player">
+    <div class="player-top">
+      <div class="player-title" id="playerTitle">Select a track</div>
+      <div class="player-controls">
+        <button class="ctrl-btn" onclick="prevTrack()" title="Previous">&#9664;&#9664;</button>
+        <button class="ctrl-btn play-pause" id="playPauseBtn" onclick="togglePlay()">&#9654;</button>
+        <button class="ctrl-btn" onclick="nextTrack()" title="Next">&#9654;&#9654;</button>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <span class="time" id="currentTime">0:00</span>
+      <div class="progress-bar" id="progressBar" onclick="seek(event)">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <span class="time" id="totalTime">0:00</span>
+    </div>
+  </div>
+
+  <audio id="player" preload="none"></audio>
+
+  <script>
+    const BASE = 'https://pub-767f2d336f0d4e62bc689c91f2c6b9c9.r2.dev/';
+    const tracks = [
+      '01-The Arrival',
+      '02-Up We Go',
+      '03-AIAA',
+      '04-The Message',
+      '05-Nightmare',
+      '06-Ape Shit',
+      '07-The Order',
+      '08-Best Choice',
+      "09-Mr. Charlie's",
+      '10-The Demand',
+      "11-Steppin'",
+      '12-Space Invaders',
+      '13-Invasion',
+      '14-Hunted',
+      '15-Goodbye',
+      '16-The Departure'
+    ];
+
+    let current = -1;
+    window.addEventListener('load', () => playTrack(0));
+    const audio = document.getElementById('player');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const playerTitle = document.getElementById('playerTitle');
+    const progressFill = document.getElementById('progressFill');
+    const currentTimeEl = document.getElementById('currentTime');
+    const totalTimeEl = document.getElementById('totalTime');
+
+    // Build tracklist
+    const list = document.getElementById('tracklist');
+    tracks.forEach((name, i) => {
+      const row = document.createElement('div');
+      row.className = 'track';
+      row.id = 'track-' + i;
+      row.innerHTML = `
+        <span class="track-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="track-name">${name.replace(/^\d+-/, '')}</span>
+        <span class="track-play">&#9654;</span>
+      `;
+      row.onclick = () => playTrack(i);
+      list.appendChild(row);
+    });
+
+    function playTrack(i) {
+      if (current >= 0) document.getElementById('track-' + current)?.classList.remove('active');
+      current = i;
+      const name = tracks[i];
+      audio.src = BASE + encodeURIComponent(name) + '.mp3';
+      audio.play();
+      playerTitle.textContent = name.replace(/^\d+-/, '');
+      document.getElementById('track-' + i)?.classList.add('active');
+      playPauseBtn.innerHTML = '&#9646;&#9646;';
+      document.getElementById('track-' + i)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function togglePlay() {
+      if (audio.paused) {
+        if (!audio.src) { playTrack(0); return; }
+        audio.play();
+        playPauseBtn.innerHTML = '&#9646;&#9646;';
+      } else {
+        audio.pause();
+        playPauseBtn.innerHTML = '&#9654;';
+      }
+    }
+
+    function prevTrack() {
+      playTrack(current > 0 ? current - 1 : tracks.length - 1);
+    }
+
+    function nextTrack() {
+      playTrack(current < tracks.length - 1 ? current + 1 : 0);
+    }
+
+    audio.addEventListener('ended', nextTrack);
+
+    audio.addEventListener('timeupdate', () => {
+      if (!audio.duration) return;
+      const pct = (audio.currentTime / audio.duration) * 100;
+      progressFill.style.width = pct + '%';
+      currentTimeEl.textContent = fmt(audio.currentTime);
+      totalTimeEl.textContent = fmt(audio.duration);
+    });
+
+    audio.addEventListener('pause', () => { playPauseBtn.innerHTML = '&#9654;'; });
+    audio.addEventListener('play',  () => { playPauseBtn.innerHTML = '&#9646;&#9646;'; });
+
+    function seek(e) {
+      const bar = document.getElementById('progressBar');
+      const pct = e.offsetX / bar.offsetWidth;
+      audio.currentTime = pct * audio.duration;
+    }
+
+    function fmt(s) {
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return m + ':' + String(sec).padStart(2, '0');
+    }
+  </script>
+
+</body>
+</html>
